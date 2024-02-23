@@ -1,76 +1,196 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!doctype html>
+<html lang="en" class="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Portfolio</title>
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <link rel="stylesheet" href="css/style.css" />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css"
+      rel="stylesheet"
+    />
+  </head>
 
-<body class="min-h-screen bg-slate-50 dark:bg-black dakr:text-white">
+  <body class="min-h-screen bg-slate-50 dark:bg-black dark:text-white">
     <header class="bg-black text-white sticky top-0 z-10">
-        <section class="max-w-4xl mx-auto p-4 flex justify-between items-center">
-            <nav class="space-x-8 text-m" aria-label="main">
-                <a href="#home" class="hover:opacity-90">home</a>
-                <a href="#blog" class="hover:opacity-90">blog</a>
-                <a href="#projects" class="hover:opacity-90">projects</a>
-            </nav>
-</section>
-</header>
-<main class="max-w-4xl mx-auto">
-    <section id="home"
-        class="flex flex-col sm:flex-row p-20 items-center gap-8 mb-12 scroll-mt-40">
+      <section class="max-w-4xl mx-auto p-4 flex justify-between items-center">
+        <nav class="space-x-8 text-m" aria-label="main">
+          <a href="#home" class="hover:opacity-90">home</a>
+          <a href="#blog" class="hover:opacity-90">blog</a>
+          <a href="#projects" class="hover:opacity-90">projects</a>
+        </nav>
+      </section>
+    </header>
+    <main class="max-w-4xl mx-auto">
+      <section
+        id="home"
+        class="flex flex-col sm:flex-row p-20 items-center gap-8 mb-12 scroll-mt-40"
+      >
         <article class="sm:w-1/2">
-            <h2
-                class="max-w-md text-m font-bold text-left sm:text-l sm:text-left text-slate-900 dark:text-white">
-                Hi, I am Haimantika👋
-            </h2>
-            <p class="max-w-md text-m mt-4 text-right sm:text-left text-slate-500 dark:text-slate-400">
-                I am currently a Developer Advocate at Hashnode and have previously worked at Appwrite and Hashnode. 
-            </p>
+          <h2
+            class="max-w-md text-m font-bold text-left sm:text-l sm:text-left text-slate-900 dark:text-white"
+          >
+            Hi, I am Haimantika👋
+          </h2>
+          <p
+            class="max-w-md text-m mt-4 text-left sm:text-left text-slate-500 dark:text-slate-400"
+          >
+            I am currently a Developer Advocate at Hashnode and have previously
+            worked at Appwrite and Microsoft.
+          </p>
 
-            <p class="max-w-md text-m mt-4 text-right sm:text-left text-slate-500 dark:text-slate-400">
-                My forté lies in frontend development, technical writing, and community building.
-            </p>
-
+          <p
+            class="max-w-md text-m mt-4 text-left sm:text-left text-slate-500 dark:text-slate-400"
+          >
+            My forté lies in frontend development, technical writing, and
+            community building.
+          </p>
         </article>
-        
-        <img class="sm:w-1/2" src="./img/hm1.jpg" alt="Haimantika's photo">
-    </section>
-    <section id="home" class="p-6 my-12 scroll-mt-20">
-        <p class="text-m mt-4 text-right sm:text-center text-slate-500 dark:text-slate-400">
-            I share developer centric content in the form of: blog posts, podcasts, tweets, conference talks, and workshops. It mostly revolves around web development, AI, writing and community building. You can find some of my talks <a href="https://haimantika.com/talks/" class="text-blue-500 hover:text-blue-700">here</a>.
+
+        <img class="sm:w-1/2" src="./img/hm1.jpg" alt="Haimantika's photo" />
+      </section>
+      <section id="home" class="p-6 my-12 scroll-mt-20">
+        <p
+          class="text-m text-right sm:text-center text-slate-500 dark:text-slate-400"
+        >
+          I share developer centric content in the form of: blog posts,
+          podcasts, tweets, conference talks, and workshops. It mostly revolves
+          around web development, AI, writing and community building. You can
+          find some of my talks
+          <a
+            href="https://haimantika.com/talks/"
+            class="text-blue-500 hover:text-blue-700"
+            >here</a
+          >.
         </p>
 
-        <p class="text-m mt-4 text-right sm:text-center text-slate-500 dark:text-slate-400">
-            Want to know more? Go to your terminal and type `npx hello-haimantika`
+        <p
+          class="text-m mt-4 text-right sm:text-center text-slate-500 dark:text-slate-400"
+        >
+          Want to know more? Go to your terminal and type `npx hello-haimantika`
         </p>
-    </section>
+      </section>
 
-    <footer id="footer" class="bg-black text-s text-white">
-        <section class="mx-auto flex max-w-4xl flex-col p-4 sm:flex-row sm:justify-between">
-              <nav>
-                <div class="flex justify-center gap-4">
-                    <!-- Text link for Twitter ("X") -->
-                    <a href="https://twitter.com/HaimantikaM" target="_blank" class="text-current">Twitter</a>
-                
-                    <!-- Text link for Newsletter -->
-                    <a href="https://newsletter.haimantika.com" target="_blank" class="text-current">Newsletter</a>
-                
-                    <!-- Text link for GitHub -->
-                    <a href="https://github.com/Haimantika" target="_blank" class="text-current">GitHub</a>
-                
-                    <!-- Text link for LinkedIn -->
-                    <a href="https://www.linkedin.com/in/haimantika-mitra/" target="_blank" class="text-current">LinkedIn</a>
-                </div>
-                
-              </nav>
+      <section
+        id="projects"
+        class="p-6 my-12 scroll-mt-20 flex justify-between"
+      >
+        <div
+          class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        >
+          <a href="#">
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              GuideMaster
+            </h5>
+          </a>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            GuideMaster helps you generate contributing guide for your open
+            source projects. Built using: OpenAI API, JavaScript, TailwindCSS
+            and HTML.
+          </p>
+          <a
+            href="https://github.com/Haimantika/Contributing-guide-generator"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Read more
+            <svg
+              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
+
+        <div
+          class="max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+        >
+          <a href="#">
+            <h5
+              class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+            >
+              Introduction package using npm
+            </h5>
+          </a>
+          <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+            Go to your terminal and type `npx hello-haimantika`. This is an npm package that helps you build a package for yourself that you can use to introduce yourself in a cool way.
+          </p>
+          <a
+            href="https://github.com/Haimantika/introduction-npm-package"
+            class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          >
+            Read more
+            <svg
+              class="rtl:rotate-180 w-3.5 h-3.5 ms-2"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 10"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M1 5h12m0 0L9 1m4 4L9 9"
+              />
+            </svg>
+          </a>
+        </div>
+      </section>
+
+      <footer id="footer" class="bg-black text-s text-white">
+        <section
+          class="mx-auto flex max-w-4xl flex-col p-4 sm:flex-row sm:justify-between"
+        >
+          <nav>
+            <div class="flex justify-center gap-4">
+              <!-- Text link for Twitter ("X") -->
+              <a
+                href="https://twitter.com/HaimantikaM"
+                target="_blank"
+                class="text-current"
+                >Twitter</a
+              >
+
+              <!-- Text link for Newsletter -->
+              <a
+                href="https://newsletter.haimantika.com"
+                target="_blank"
+                class="text-current"
+                >Newsletter</a
+              >
+
+              <!-- Text link for GitHub -->
+              <a
+                href="https://github.com/Haimantika"
+                target="_blank"
+                class="text-current"
+                >GitHub</a
+              >
+
+              <!-- Text link for LinkedIn -->
+              <a
+                href="https://www.linkedin.com/in/haimantika-mitra/"
+                target="_blank"
+                class="text-current"
+                >LinkedIn</a
+              >
+            </div>
+          </nav>
         </section>
       </footer>
-    
-</main>
-
-    
-
-</body>
+    </main>
+  </body>
 </html>

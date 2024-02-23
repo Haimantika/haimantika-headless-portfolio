@@ -12,5 +12,8 @@
   "license": "ISC",
   "devDependencies": {
     "prettier-plugin-tailwindcss": "^0.5.11"
+  },
+  "dependencies": {
+    "flowbite": "^2.3.0"
   }
 }
