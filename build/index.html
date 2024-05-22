@@ -133,31 +133,9 @@
         </section>
     </footer>
     <script>
-      const themeToggle = document.getElementById('themeToggle');
-      const html = document.documentElement;
-  
-      themeToggle.addEventListener('click', function() {
-          if (html.classList.contains('dark')) {
-              html.classList.remove('dark');
-              // Update to sun icon if you switch between icons
-              localStorage.theme = 'light';
-          } else {
-              html.classList.add('dark');
-              // Update to moon icon if you switch between icons
-              localStorage.theme = 'dark';
-          }
-      });
-  
-      // Set the initial state of the theme and button icon based on localStorage or system preference
-      if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-          html.classList.add('dark');
-          // Update button to show moon icon if you switch between icons
-      } else {
-          html.classList.remove('dark');
-          // The button already has a sun icon by default
-      }
-  </script>
-  
+        // Check for system preference on initial load
+        document.documentElement.classList.toggle('dark', window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    </script>
 
 </body>
 </html>
