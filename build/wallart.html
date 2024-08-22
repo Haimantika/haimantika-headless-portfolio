@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Guestbook</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .custom-cursor {
+            cursor: crosshair;
+        }
+    </style>
+</head>
+
+<body class="h-screen bg-teal-600 overflow-hidden">
+    <div id="paint-container" class="absolute bg-gray-200 border-2 border-white shadow-md" style="width: 800px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+        <div id="title-bar" class="bg-blue-900 text-white px-2 py-1 flex justify-between items-center cursor-move">
+            <span>untitled - Paint</span>
+            <div class="flex gap-1">
+                <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">_</button>
+                <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">□</button>
+                <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">×</button>
+            </div>
+        </div>
+        <div class="bg-gray-300 px-2 py-1 text-sm">
+            <span class="mr-4">File</span>
+            <span class="mr-4">Edit</span>
+            <span class="mr-4">View</span>
+            <span class="mr-4">Image</span>
+            <span class="mr-4">Options</span>
+            <span>Help</span>
+        </div>
+        <div class="flex">
+            <div class="w-8 bg-gray-300 p-0.5 border-r border-gray-400">
+                <button id="brush-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5 bg-gray-300 border border-gray-400 shadow-inner">
+                    🖌️
+                </button>
+                <button id="eraser-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5">
+                    🧽
+                </button>
+            </div>
+            <div id="canvas-container" class="flex-grow overflow-hidden border border-gray-400" style="width: 724px; height: 500px;">
+                <canvas id="paint-canvas" class="custom-cursor"></canvas>
+            </div>
+        </div>
+        <div class="flex bg-gray-300 p-1 border-t border-gray-400">
+            <div id="color-palette" class="flex flex-wrap gap-1">
+                <!-- Color buttons will be added here dynamically -->
+            </div>
+        </div>
+        <div class="bg-gray-300 px-2 py-1 text-sm border-t border-gray-400">
+            For Help, click Help Topics on the Help Menu.
+        </div>
+    </div>
+
+    <script>
+        const colors = [
+            '#000000', '#808080', '#800000', '#808000', '#008000', '#008080', '#000080', '#800080', '#808040', '#004040', '#0080FF', '#004080', '#8000FF', '#804000',
+            '#FFFFFF', '#C0C0C0', '#FF0000', '#FFFF00', '#00FF00', '#00FFFF', '#0000FF', '#FF00FF', '#FFFF80', '#00FF80', '#80FFFF', '#8080FF', '#FF0080', '#FF8040'
+        ];
+
+        const canvas = document.getElementById('paint-canvas');
+        const ctx = canvas.getContext('2d');
+        const canvasContainer = document.getElementById('canvas-container');
+        let isDrawing = false;
+        let color = '#000000';
+        let tool = 'brush';
+
+        // Set canvas size
+        function resizeCanvas() {
+            canvas.width = canvasContainer.clientWidth;
+            canvas.height = canvasContainer.clientHeight;
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        // Set up color palette
+        const colorPalette = document.getElementById('color-palette');
+        colors.forEach(c => {
+            const colorButton = document.createElement('button');
+            colorButton.className = `w-6 h-6 p-0 min-w-0 ${color === c ? 'ring-1 ring-gray-600' : ''}`;
+            colorButton.style.backgroundColor = c;
+            colorButton.onclick = () => setColor(c);
+            colorPalette.appendChild(colorButton);
+        });
+
+        function setColor(newColor) {
+            color = newColor;
+            document.querySelectorAll('#color-palette button').forEach(btn => {
+                btn.classList.toggle('ring-1', btn.style.backgroundColor === newColor);
+                btn.classList.toggle('ring-gray-600', btn.style.backgroundColor === newColor);
+            });
+        }
+
+        // Set up tools
+        document.getElementById('brush-tool').onclick = () => setTool('brush');
+        document.getElementById('eraser-tool').onclick = () => setTool('eraser');
+
+        function setTool(newTool) {
+            tool = newTool;
+            document.getElementById('brush-tool').classList.toggle('bg-gray-300', newTool === 'brush');
+            document.getElementById('brush-tool').classList.toggle('border', newTool === 'brush');
+            document.getElementById('brush-tool').classList.toggle('border-gray-400', newTool === 'brush');
+            document.getElementById('brush-tool').classList.toggle('shadow-inner', newTool === 'brush');
+            document.getElementById('eraser-tool').classList.toggle('bg-gray-300', newTool === 'eraser');
+            document.getElementById('eraser-tool').classList.toggle('border', newTool === 'eraser');
+            document.getElementById('eraser-tool').classList.toggle('border-gray-400', newTool === 'eraser');
+            document.getElementById('eraser-tool').classList.toggle('shadow-inner', newTool === 'eraser');
+        }
+
+        // Drawing functionality
+        canvas.addEventListener('mousedown', startDrawing);
+        canvas.addEventListener('mousemove', draw);
+        canvas.addEventListener('mouseup', stopDrawing);
+        canvas.addEventListener('mouseout', stopDrawing);
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function draw(e) {
+            if (!isDrawing) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            ctx.strokeStyle = tool === 'eraser' ? '#FFFFFF' : color;
+            ctx.lineWidth = tool === 'eraser' ? 20 : 2;
+            ctx.lineCap = 'round';
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            ctx.beginPath();
+        }
+
+        // Draggable functionality
+        const container = document.getElementById('paint-container');
+        const titleBar = document.getElementById('title-bar');
+        let isDragging = false;
+        let currentX;
+        let currentY;
+        let initialX;
+        let initialY;
+        let xOffset = 0;
+        let yOffset = 0;
+
+        titleBar.addEventListener('mousedown', dragStart);
+        document.addEventListener('mousemove', drag);
+        document.addEventListener('mouseup', dragEnd);
+
+        function dragStart(e) {
+            initialX = e.clientX - xOffset;
+            initialY = e.clientY - yOffset;
+            isDragging = true;
+        }
+
+        function drag(e) {
+            if (isDragging) {
+                e.preventDefault();
+                currentX = e.clientX - initialX;
+                currentY = e.clientY - initialY;
+                xOffset = currentX;
+                yOffset = currentY;
+                setTranslate(currentX, currentY, container);
+            }
+        }
+
+        function setTranslate(xPos, yPos, el) {
+            el.style.transform = `translate3d(${xPos}px, ${yPos}px, 0)`;
+        }
+
+        function dragEnd(e) {
+            initialX = currentX;
+            initialY = currentY;
+            isDragging = false;
+        }
+    </script>
+</body>
+</html>
