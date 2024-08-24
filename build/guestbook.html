@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Guestbook</title>
+    <title>Wall Art Guestbook</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <style>
         .custom-cursor {
@@ -12,17 +12,28 @@
     </style>
 </head>
 
-<body class="h-screen bg-teal-600 overflow-hidden">
-    <div id="paint-container" class="absolute bg-gray-200 border-2 border-white shadow-md" style="width: 800px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
+<body class="h-screen transition-colors duration-300">
+    <header class="sticky top-0 z-10 p-4 transition-colors duration-300">
+        <section class="max-w-4xl mx-auto flex justify-between items-center">
+            <nav class="space-x-8 text-m" aria-label="main">
+                <a href="index.html" class="hover:opacity-90">home</a>
+                <a href="https://haimantika.dev/blog" class="hover:opacity-90">blog</a>
+                <a href="index.html#projects" class="hover:opacity-90">projects</a>
+                <a href="#guestbook" class="hover:opacity-90">guestbook</a>
+            </nav>
+        </section>
+    </header>
+
+    <div id="paint-container" class="absolute border-2 shadow-md transition-colors duration-300" style="width: 800px; left: 50%; top: 50%; transform: translate(-50%, -50%);">
         <div id="title-bar" class="bg-blue-900 text-white px-2 py-1 flex justify-between items-center cursor-move">
-            <span>untitled - Paint</span>
+            <span>Wall Art Guestbook</span>
             <div class="flex gap-1">
                 <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">_</button>
                 <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">□</button>
                 <button class="h-5 w-5 p-0 min-w-0 text-white hover:bg-blue-700">×</button>
             </div>
         </div>
-        <div class="bg-gray-300 px-2 py-1 text-sm">
+        <div class="px-2 py-1 text-sm transition-colors duration-300">
             <span class="mr-4">File</span>
             <span class="mr-4">Edit</span>
             <span class="mr-4">View</span>
@@ -31,24 +42,24 @@
             <span>Help</span>
         </div>
         <div class="flex">
-            <div class="w-8 bg-gray-300 p-0.5 border-r border-gray-400">
-                <button id="brush-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5 bg-gray-300 border border-gray-400 shadow-inner">
+            <div class="w-8 p-0.5 border-r transition-colors duration-300">
+                <button id="brush-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5 border shadow-inner transition-colors duration-300">
                     🖌️
                 </button>
-                <button id="eraser-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5">
+                <button id="eraser-tool" class="w-7 h-7 p-0 min-w-0 mb-0.5 transition-colors duration-300">
                     🧽
                 </button>
             </div>
-            <div id="canvas-container" class="flex-grow overflow-hidden border border-gray-400" style="width: 724px; height: 500px;">
-                <canvas id="paint-canvas" class="custom-cursor"></canvas>
+            <div id="canvas-container" class="flex-grow overflow-hidden border transition-colors duration-300" style="width: 724px; height: 500px;">
+                <canvas id="paint-canvas" class="custom-cursor bg-white"></canvas>
             </div>
         </div>
-        <div class="flex bg-gray-300 p-1 border-t border-gray-400">
+        <div class="flex p-1 border-t transition-colors duration-300">
             <div id="color-palette" class="flex flex-wrap gap-1">
                 <!-- Color buttons will be added here dynamically -->
             </div>
         </div>
-        <div class="bg-gray-300 px-2 py-1 text-sm border-t border-gray-400">
+        <div class="px-2 py-1 text-sm border-t transition-colors duration-300">
             For Help, click Help Topics on the Help Menu.
         </div>
     </div>
@@ -65,6 +76,56 @@
         let isDrawing = false;
         let color = '#000000';
         let tool = 'brush';
+        let isDarkMode = false;
+
+        function setDarkMode(dark) {
+            isDarkMode = dark;
+            document.body.classList.toggle('bg-black', dark);
+            document.body.classList.toggle('text-white', dark);
+            document.body.classList.toggle('bg-slate-50', !dark);
+            document.body.classList.toggle('text-black', !dark);
+
+            const header = document.querySelector('header');
+            header.classList.toggle('bg-black', dark);
+            header.classList.toggle('text-white', dark);
+            header.classList.toggle('bg-white', !dark);
+            header.classList.toggle('text-black', !dark);
+
+            const paintContainer = document.getElementById('paint-container');
+            paintContainer.classList.toggle('bg-gray-800', dark);
+            paintContainer.classList.toggle('border-gray-600', dark);
+            paintContainer.classList.toggle('bg-gray-200', !dark);
+            paintContainer.classList.toggle('border-white', !dark);
+
+            const menuBar = paintContainer.querySelector('div:nth-child(2)');
+            menuBar.classList.toggle('bg-gray-700', dark);
+            menuBar.classList.toggle('text-white', dark);
+            menuBar.classList.toggle('bg-gray-300', !dark);
+            menuBar.classList.toggle('text-black', !dark);
+
+            const toolBar = paintContainer.querySelector('div:nth-child(3) > div:first-child');
+            toolBar.classList.toggle('bg-gray-700', dark);
+            toolBar.classList.toggle('border-gray-600', dark);
+            toolBar.classList.toggle('bg-gray-300', !dark);
+            toolBar.classList.toggle('border-gray-400', !dark);
+
+            const colorPalette = document.getElementById('color-palette').parentElement;
+            colorPalette.classList.toggle('bg-gray-700', dark);
+            colorPalette.classList.toggle('border-gray-600', dark);
+            colorPalette.classList.toggle('bg-gray-300', !dark);
+            colorPalette.classList.toggle('border-gray-400', !dark);
+
+            const helpBar = paintContainer.querySelector('div:last-child');
+            helpBar.classList.toggle('bg-gray-700', dark);
+            helpBar.classList.toggle('text-white', dark);
+            helpBar.classList.toggle('border-gray-600', dark);
+            helpBar.classList.toggle('bg-gray-300', !dark);
+            helpBar.classList.toggle('text-black', !dark);
+            helpBar.classList.toggle('border-gray-400', !dark);
+
+            setTool(tool);
+            clearCanvas();
+        }
 
         // Generate a unique identifier for this device/browser
         function generateDeviceId() {
@@ -80,7 +141,8 @@
         function resizeCanvas() {
             canvas.width = canvasContainer.clientWidth;
             canvas.height = canvasContainer.clientHeight;
-            loadDrawing(); // Load the saved drawing after resizing
+            clearCanvas();
+            loadDrawing();
         }
 
         resizeCanvas();
@@ -90,7 +152,7 @@
         const colorPalette = document.getElementById('color-palette');
         colors.forEach(c => {
             const colorButton = document.createElement('button');
-            colorButton.className = `w-6 h-6 p-0 min-w-0 ${color === c ? 'ring-1 ring-gray-600' : ''}`;
+            colorButton.className = `w-6 h-6 p-0 min-w-0 ${color === c ? 'ring-1 ring-gray-600 dark:ring-gray-300' : ''}`;
             colorButton.style.backgroundColor = c;
             colorButton.onclick = () => setColor(c);
             colorPalette.appendChild(colorButton);
@@ -101,6 +163,7 @@
             document.querySelectorAll('#color-palette button').forEach(btn => {
                 btn.classList.toggle('ring-1', btn.style.backgroundColor === newColor);
                 btn.classList.toggle('ring-gray-600', btn.style.backgroundColor === newColor);
+                btn.classList.toggle('dark:ring-gray-300', btn.style.backgroundColor === newColor);
             });
         }
 
@@ -110,14 +173,20 @@
 
         function setTool(newTool) {
             tool = newTool;
-            document.getElementById('brush-tool').classList.toggle('bg-gray-300', newTool === 'brush');
-            document.getElementById('brush-tool').classList.toggle('border', newTool === 'brush');
-            document.getElementById('brush-tool').classList.toggle('border-gray-400', newTool === 'brush');
-            document.getElementById('brush-tool').classList.toggle('shadow-inner', newTool === 'brush');
-            document.getElementById('eraser-tool').classList.toggle('bg-gray-300', newTool === 'eraser');
-            document.getElementById('eraser-tool').classList.toggle('border', newTool === 'eraser');
-            document.getElementById('eraser-tool').classList.toggle('border-gray-400', newTool === 'eraser');
-            document.getElementById('eraser-tool').classList.toggle('shadow-inner', newTool === 'eraser');
+            const brushTool = document.getElementById('brush-tool');
+            const eraserTool = document.getElementById('eraser-tool');
+
+            brushTool.classList.toggle('bg-gray-300', newTool === 'brush' && !isDarkMode);
+            brushTool.classList.toggle('bg-gray-600', newTool === 'brush' && isDarkMode);
+            brushTool.classList.toggle('border-gray-400', newTool === 'brush' && !isDarkMode);
+            brushTool.classList.toggle('border-gray-500', newTool === 'brush' && isDarkMode);
+            brushTool.classList.toggle('shadow-inner', newTool === 'brush');
+
+            eraserTool.classList.toggle('bg-gray-300', newTool === 'eraser' && !isDarkMode);
+            eraserTool.classList.toggle('bg-gray-600', newTool === 'eraser' && isDarkMode);
+            eraserTool.classList.toggle('border-gray-400', newTool === 'eraser' && !isDarkMode);
+            eraserTool.classList.toggle('border-gray-500', newTool === 'eraser' && isDarkMode);
+            eraserTool.classList.toggle('shadow-inner', newTool === 'eraser');
         }
 
         // Drawing functionality
@@ -125,6 +194,21 @@
         canvas.addEventListener('mousemove', draw);
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
+
+        // Touch support for mobile devices
+        canvas.addEventListener('touchstart', handleTouch);
+        canvas.addEventListener('touchmove', handleTouch);
+        canvas.addEventListener('touchend', stopDrawing);
+
+        function handleTouch(e) {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const mouseEvent = new MouseEvent("mousemove", {
+                clientX: touch.clientX,
+                clientY: touch.clientY
+            });
+            canvas.dispatchEvent(mouseEvent);
+        }
 
         function startDrawing(e) {
             isDrawing = true;
@@ -143,13 +227,19 @@
             ctx.stroke();
             ctx.beginPath();
             ctx.moveTo(x, y);
-            saveDrawing(); // Save the drawing after each stroke
         }
 
         function stopDrawing() {
-            isDrawing = false;
-            ctx.beginPath();
-            saveDrawing(); // Save the drawing when stopping
+            if (isDrawing) {
+                isDrawing = false;
+                ctx.beginPath();
+                saveDrawing();
+            }
+        }
+
+        function clearCanvas() {
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
 
         // Save and load functionality
@@ -166,8 +256,7 @@
                 };
                 img.src = savedDrawing;
             } else {
-                ctx.fillStyle = '#FFFFFF';
-                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                clearCanvas();
             }
         }
 
@@ -215,6 +304,21 @@
             initialY = currentY;
             isDragging = false;
         }
+
+        // Dark mode functionality
+        function checkDarkMode() {
+            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                setDarkMode(true);
+            } else {
+                setDarkMode(false);
+            }
+        }
+
+        // Check for system preference on initial load
+        checkDarkMode();
+
+        // Listen for changes in system preference
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', checkDarkMode);
     </script>
 </body>
 </html>
